@@ -46,4 +46,4 @@ if __name__ == "__main__":
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Wrote one random shuffle to {result_path}")
+    print(f"Az új véletlenszerű húzás elkészült: {result_path}")

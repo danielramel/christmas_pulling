@@ -1,16 +1,12 @@
-# Family Christmas Pulling
+# Family Christmas Draw
 
-This project is for my family's Christmas pulling. It randomly assigns each
-family member another person to buy a Christmas gift for. People in the same
-group are not allowed to be assigned to each other. The assignments are
-encoded as Base64 signals.
+This project randomly assigns each family member another person to buy a
+Christmas gift for. People in the same group cannot be assigned to each other.
+Assignments are stored as Base64-encoded signals.
 
-## How it works
+## Usage
 
 - Run `python christmas_pulling.py` to create a new draw.
 - The script writes the assignments to `result.json`.
-- Open `index.html` in a browser to select a name and reveal that person's
-  encoded result.
-- Select a name to show its encoded value, then use the built-in decoder
-  sequence to slowly cycle through every possible name before revealing the
-  assigned person.
+- Open `index.html` in a browser, select your name, and reveal the person
+  assigned to you.

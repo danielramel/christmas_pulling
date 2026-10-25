@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Christmas Pulling | Secret Signal</title>
+    <title>Karácsonyi húzás</title>
     <style>
         :root {
             color-scheme: dark;
@@ -28,36 +28,16 @@
             color: var(--ink);
             font: 16px/1.5 Inter, ui-sans-serif, system-ui, sans-serif;
         }
-        body::before {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: linear-gradient(115deg, transparent 20%, #5cf2d90c 50%, transparent 80%);
-            background-size: 220% 100%;
-            content: "";
-            animation: aurora 10s ease-in-out infinite;
-            pointer-events: none;
-        }
-        #snow { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-        main { width: min(100% - 2rem, 56rem); margin: auto; padding: 3.5rem 0 2rem; }
-        header { position: relative; margin-bottom: 2rem; text-align: center; }
-        .eyebrow {
-            margin: 0 0 .75rem;
-            color: var(--ice);
-            font-size: .72rem;
-            font-weight: 800;
-            letter-spacing: .24em;
-            text-transform: uppercase;
-        }
+        main { width: min(100% - 2rem, 56rem); margin: auto; padding: 2.5rem 0 2rem; }
+        header { position: relative; margin-bottom: 1.5rem; text-align: center; }
         h1 {
             margin: 0;
             font-size: clamp(2.4rem, 10vw, 5.5rem);
             letter-spacing: -.07em;
             line-height: .95;
             text-shadow: 0 0 1.5rem #a7f3ff55, .08em .08em 0 #ff6ba633;
-            animation: titlePulse 3s ease-in-out infinite alternate;
         }
-        header p { margin: 1rem auto 0; max-width: 34rem; color: var(--muted); }
+        header p { margin: .75rem auto 0; max-width: 34rem; color: var(--muted); }
         .card {
             position: relative;
             overflow: hidden;
@@ -66,8 +46,7 @@
             border-radius: 1.5rem;
             background: linear-gradient(145deg, #10213dd9, var(--panel));
             box-shadow: 0 2rem 5rem #0008, inset 0 1px #ffffff18;
-            backdrop-filter: blur(18px);
-            animation: arrive .8s cubic-bezier(.2, .8, .2, 1) both;
+            animation: arrive .35s ease-out both;
         }
         .card::before {
             position: absolute;
@@ -110,7 +89,7 @@
             font-weight: 850;
             transition: transform .2s ease, box-shadow .2s ease, background-position .5s ease;
         }
-        button:hover:not(:disabled) { background-position: 100% 0; box-shadow: 0 .7rem 2rem #ff6ba655; transform: translateY(-3px); }
+        button:hover:not(:disabled) { background-position: 100% 0; box-shadow: 0 .7rem 2rem #ff6ba655; transform: translateY(-2px); }
         button:active:not(:disabled) { transform: translateY(1px) scale(.98); }
         button:focus-visible { outline: 3px solid var(--ice); outline-offset: 3px; }
         button:disabled { cursor: not-allowed; opacity: .45; }
@@ -126,7 +105,7 @@
             text-align: center;
             animation: reveal .7s cubic-bezier(.2, 1.4, .4, 1) both;
         }
-        .result-label { color: #ffdcb0; font-size: .8rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+        .result-label { color: #ffdcb0; font-size: .8rem; font-weight: 800; }
         .result code { display: block; margin: .4rem 0 1rem; color: var(--gold); font-size: clamp(1.5rem, 6vw, 2.4rem); font-weight: 900; letter-spacing: .08em; overflow-wrap: anywhere; text-shadow: 0 0 .9rem #ffd16688; }
         .decoder {
             position: relative;
@@ -136,7 +115,6 @@
             border-top: 1px solid #ffffff14;
         }
         .decoder h2 { margin: 0 0 .3rem; font-size: 1.05rem; }
-        .decoder p { margin: 0 0 1rem; color: var(--muted); font-size: .9rem; }
         .decode-output {
             min-height: 3.2rem;
             margin-top: 1rem;
@@ -150,7 +128,7 @@
             overflow-wrap: anywhere;
         }
         .decode-output:empty { display: none; }
-        .decode-output.decoding { color: var(--ice); background: linear-gradient(90deg, #a7f3ff12, #a7f3ff55, #a7f3ff12); background-size: 200% 100%; animation: shimmer .6s linear infinite, signalFlicker .18s steps(2) infinite; }
+        .decode-output.decoding { color: var(--ice); background: #a7f3ff1c; }
         .decode-output.success { animation: decoded .7s cubic-bezier(.2, 1.5, .4, 1) both; }
         footer { color: var(--muted); font-size: .8rem; text-align: center; }
         #status { margin: 1.25rem 0 0; }
@@ -160,38 +138,33 @@
         @keyframes decoded { 0% { opacity: 0; transform: scale(.7) rotate(-2deg); filter: blur(12px); } 70% { transform: scale(1.06) rotate(1deg); } 100% { opacity: 1; transform: none; filter: none; } }
         @keyframes shimmer { to { background-position: -200% 0; } }
         @keyframes signalFlicker { 50% { opacity: .55; } }
-        @keyframes titlePulse { from { filter: brightness(1); } to { filter: brightness(1.25) saturate(1.25); } }
-        @keyframes aurora { 0%, 100% { background-position: 0 0; opacity: .7; } 50% { background-position: 100% 0; opacity: 1; } }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
 <body>
-    <canvas id="snow" aria-hidden="true"></canvas>
     <main>
-        <header>
-            <p class="eyebrow">✦ encrypted christmas exchange ✦</p>
-            <h1>🎄 Secret Signal</h1>
-            <p>Choose your name. Decode your mission. Keep the magic secret.</p>
-        </header>
-        <section class="card" aria-label="Christmas pulling result">
-            <label class="field-label" for="person">Your identity</label>
-            <select id="person" disabled>
-                <option>Loading the draw…</option>
-            </select>
-            <div class="result" id="result" hidden aria-live="polite">
-                <div class="result-label">Your encoded name</div>
-                <code id="encoded-result"></code>
-                <button class="primary" id="reveal" type="button" disabled>◉ Decode name</button>
-            </div>
-            <div class="decoder" id="decoder">
-                <h2>◈ Name decoder</h2>
-                <p>Every name rotates through the signal before locking into place.</p>
-                <div class="decode-output" id="decode-output" aria-live="polite"></div>
-            </div>
-        </section>
-        <footer><p id="status">Loading the latest draw.</p></footer>
+    <header>
+        <h1>🎄 Karácsonyi húzás</h1>
+        <p>Válaszd ki a neved, és tudd meg, kinek készülj ajándékkal!</p>
+    </header>
+    <section class="card" aria-label="Karácsonyi húzás eredménye">
+        <label class="field-label" for="person">A neved</label>
+        <select id="person" disabled>
+            <option>Betöltés…</option>
+        </select>
+        <div class="result" id="result" hidden aria-live="polite">
+            <div class="result-label">A titkos jel</div>
+            <code id="encoded-result"></code>
+            <button class="primary" id="reveal" type="button" disabled>◉ Felfedés</button>
+        </div>
+        <div class="decoder" id="decoder">
+            <h2>◈ A kihúzott név</h2>
+            <div class="decode-output" id="decode-output" aria-live="polite"></div>
+        </div>
+    </section>
+    <footer><p id="status">A húzás betöltése…</p></footer>
     </main>
     <script>
         const personSelect = document.querySelector("#person");
@@ -215,24 +188,24 @@
             try {
                 decodedName = decodeBase64(value);
             } catch {
-                decodeOutput.textContent = "That signal is not valid Base64.";
+                decodeOutput.textContent = "Érvénytelen titkos jel.";
                 decodeOutput.className = "decode-output error";
-                status.textContent = "Decode failed. Check the signal and try again.";
+                status.textContent = "A felfedés nem sikerült.";
                 status.classList.add("error");
                 return;
             }
             status.classList.remove("error");
-            status.textContent = "Cycling through every possible name…";
+            status.textContent = "A név felfedése…";
             revealButton.disabled = true;
             const targetIndex = names.indexOf(decodedName);
-            const totalSteps = names.length * 3 + targetIndex + 1;
+            const totalSteps = names.length * 2 + targetIndex + 1;
             let step = 0;
             const rotate = () => {
                 decodeOutput.textContent = names[step % names.length];
                 step += 1;
                 if (step < totalSteps) {
                     const progress = step / totalSteps;
-                    const delay = 180 + Math.round(progress * progress * 520);
+                    const delay = 45 + Math.round(progress * 75);
                     activeAnimation = window.setTimeout(rotate, delay);
                     return;
                 }
@@ -240,7 +213,7 @@
                 decodeOutput.className = "decode-output success";
                 activeAnimation = null;
                 revealButton.disabled = false;
-                status.textContent = "Name decoded. Mission acquired. Keep it secret!";
+                status.textContent = "Megvan! Tartsd titokban.";
             };
             rotate();
         }
@@ -251,10 +224,10 @@
                 return response.json();
             })
             .then((result) => {
-                personSelect.replaceChildren(new Option("Choose your name…", ""));
+                personSelect.replaceChildren(new Option("Válaszd ki a neved…", ""));
                 result.forEach(({ person }) => personSelect.add(new Option(person, person)));
                 personSelect.disabled = false;
-                status.textContent = "Select your name to reveal its encoded name.";
+                status.textContent = "Válaszd ki a neved.";
                 personSelect.addEventListener("change", () => {
                     if (activeAnimation) window.clearTimeout(activeAnimation);
                     activeAnimation = null;
@@ -265,8 +238,8 @@
                     decodeOutput.className = "decode-output";
                     decodeOutput.textContent = "";
                     status.textContent = selectedAssignment
-                        ? "Encoded name revealed. Press Decode name to continue."
-                        : "Select your name to reveal its encoded name.";
+                        ? "A titkos jel készen áll. Nyomd meg a felfedést."
+                        : "Válaszd ki a neved.";
                 });
                 revealButton.addEventListener("click", () => {
                     if (!selectedAssignment) return;
@@ -275,37 +248,10 @@
             })
             .catch((error) => {
                 personSelect.replaceChildren();
-                status.textContent = error.message;
+                status.textContent = `Hiba a húzás betöltésekor: ${error.message}`;
                 status.classList.add("error");
             });
 
-        const canvas = document.querySelector("#snow");
-        const context = canvas.getContext("2d");
-        const flakes = [];
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        function createFlake() {
-            return { x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2.8 + .6, speed: Math.random() * .45 + .15, drift: Math.random() * .5 - .25, alpha: Math.random() * .65 + .2 };
-        }
-        function animateSnow() {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            while (flakes.length < Math.min(110, Math.floor(window.innerWidth / 9))) flakes.push(createFlake());
-            flakes.forEach((flake) => {
-                flake.y += flake.speed;
-                flake.x += flake.drift;
-                if (flake.y > canvas.height + 5) Object.assign(flake, createFlake(), { y: -5 });
-                context.beginPath();
-                context.fillStyle = `rgba(205, 244, 255, ${flake.alpha})`;
-                context.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
-                context.fill();
-            });
-            requestAnimationFrame(animateSnow);
-        }
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
-        animateSnow();
     </script>
 </body>
 </html>
