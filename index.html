@@ -156,8 +156,6 @@
             <option>Betöltés…</option>
         </select>
         <div class="result" id="result" hidden aria-live="polite">
-            <div class="result-label">A titkos jel</div>
-            <code id="encoded-result"></code>
             <label class="field-label" for="name-confirmation">Írd be újra a neved a felfedéshez</label>
             <input id="name-confirmation" type="text" autocomplete="off" disabled>
             <button class="primary" id="reveal" type="button" disabled>◉ Felfedés</button>
@@ -173,7 +171,6 @@
         const personSelect = document.querySelector("#person");
         const revealButton = document.querySelector("#reveal");
         const resultBox = document.querySelector("#result");
-        const encodedResult = document.querySelector("#encoded-result");
         const nameConfirmation = document.querySelector("#name-confirmation");
         const decodeOutput = document.querySelector("#decode-output");
         const status = document.querySelector("#status");
@@ -237,7 +234,6 @@
                     activeAnimation = null;
                     selectedAssignment = result.find(({ person }) => person === personSelect.value);
                     resultBox.hidden = !selectedAssignment;
-                    encodedResult.textContent = selectedAssignment?.pulled ?? "";
                     nameConfirmation.value = "";
                     nameConfirmation.disabled = !selectedAssignment;
                     revealButton.disabled = true;
