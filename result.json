@@ -1,46 +1,57 @@
 [
   {
-    "person": "Eszter",
-    "pulled": "R3l1bGE="
-  },
-  {
-    "person": "Gyula",
-    "pulled": "RGFuaQ=="
-  },
-  {
-    "person": "Dani",
-    "pulled": "w4FiZWw="
-  },
-  {
-    "person": "Ábel",
-    "pulled": "TGlsaQ=="
-  },
-  {
-    "person": "Lili",
-    "pulled": "RXN6dGVyw6Fn"
-  },
-  {
-    "person": "Eszterág",
-    "pulled": "QWTDqWw="
-  },
-  {
-    "person": "Adél",
-    "pulled": "UGV0cmE="
-  },
-  {
-    "person": "Petra",
+    "person": "Józsi",
+    "code": "3736",
     "pulled": "QmVuY2U="
   },
   {
     "person": "Bence",
+    "code": "6556",
+    "pulled": "UGV0cmE="
+  },
+  {
+    "person": "Petra",
+    "code": "8654",
+    "pulled": "w4FiZWw="
+  },
+  {
+    "person": "Ábel",
+    "code": "2911",
+    "pulled": "TGlsaQ=="
+  },
+  {
+    "person": "Lili",
+    "code": "3170",
+    "pulled": "RXN6dGVy"
+  },
+  {
+    "person": "Eszter",
+    "code": "3910",
+    "pulled": "R3l1bGE="
+  },
+  {
+    "person": "Gyula",
+    "code": "7239",
+    "pulled": "QWTDqWw="
+  },
+  {
+    "person": "Adél",
+    "code": "0788",
+    "pulled": "RGFuaQ=="
+  },
+  {
+    "person": "Dani",
+    "code": "0164",
+    "pulled": "RXN6dGVyw6Fn"
+  },
+  {
+    "person": "Eszterág",
+    "code": "4974",
     "pulled": "VGlib3I="
   },
   {
     "person": "Tibor",
+    "code": "2621",
     "pulled": "SsOzenNp"
-  },
-  {
-    "person": "Józsi",
-    "pulled": "RXN6dGVy"
   }
 ]

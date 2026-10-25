@@ -148,16 +148,17 @@
     <main>
     <header>
         <h1>🎄 Karácsonyi húzás</h1>
-        <p>Válaszd ki a neved, és tudd meg, kinek készülj ajándékkal!</p>
+        <p>Írd be a neked küldött személyes kódot, és tudd meg, kinek készülj ajándékkal!</p>
     </header>
     <section class="card" aria-label="Karácsonyi húzás eredménye">
-        <label class="field-label" for="person">A neved</label>
-        <select id="person" disabled>
-            <option>Betöltés…</option>
-        </select>
+        <label class="field-label" for="code">A személyes kódod</label>
+        <input id="code" type="text" inputmode="numeric" pattern="[0-9]{4}"
+            maxlength="4" autocomplete="one-time-code" placeholder="0000">
+        <button class="primary" id="load" type="button">◉ Bejelentkezés</button>
         <div class="result" id="result" hidden aria-live="polite">
+            <div id="person-name"></div>
             <label class="field-label" for="name-confirmation">Írd be újra a neved a felfedéshez</label>
-            <input id="name-confirmation" type="text" autocomplete="off" disabled>
+            <input id="name-confirmation" type="text" autocomplete="off">
             <button class="primary" id="reveal" type="button" disabled>◉ Felfedés</button>
         </div>
         <div class="decoder" id="decoder">
@@ -168,10 +169,12 @@
     <footer><p id="status">A húzás betöltése…</p></footer>
     </main>
     <script>
-        const personSelect = document.querySelector("#person");
-        const revealButton = document.querySelector("#reveal");
+        const codeInput = document.querySelector("#code");
+        const loadButton = document.querySelector("#load");
         const resultBox = document.querySelector("#result");
+        const personName = document.querySelector("#person-name");
         const nameConfirmation = document.querySelector("#name-confirmation");
+        const revealButton = document.querySelector("#reveal");
         const decodeOutput = document.querySelector("#decode-output");
         const status = document.querySelector("#status");
         let selectedAssignment;
@@ -225,23 +228,23 @@
                 return response.json();
             })
             .then((result) => {
-                personSelect.replaceChildren(new Option("Válaszd ki a neved…", ""));
-                result.forEach(({ person }) => personSelect.add(new Option(person, person)));
-                personSelect.disabled = false;
-                status.textContent = "Válaszd ki a neved.";
-                personSelect.addEventListener("change", () => {
-                    if (activeAnimation) window.clearTimeout(activeAnimation);
-                    activeAnimation = null;
-                    selectedAssignment = result.find(({ person }) => person === personSelect.value);
+                loadButton.addEventListener("click", () => {
+                    const code = codeInput.value.trim();
+                    selectedAssignment = result.find((assignment) => assignment.code === code);
                     resultBox.hidden = !selectedAssignment;
-                    nameConfirmation.value = "";
-                    nameConfirmation.disabled = !selectedAssignment;
                     revealButton.disabled = true;
-                    decodeOutput.className = "decode-output";
+                    nameConfirmation.value = "";
                     decodeOutput.textContent = "";
-                    status.textContent = selectedAssignment
-                        ? "Írd be újra a neved a felfedéshez."
-                        : "Válaszd ki a neved.";
+                    decodeOutput.className = "decode-output";
+                    status.classList.toggle("error", !selectedAssignment);
+                    if (selectedAssignment) {
+                        personName.textContent = selectedAssignment.person;
+                        status.textContent = "Írd be újra a neved a felfedéshez.";
+                        nameConfirmation.focus();
+                    } else {
+                        personName.textContent = "";
+                        status.textContent = "Érvénytelen kód.";
+                    }
                 });
                 nameConfirmation.addEventListener("input", () => {
                     const confirmed = Boolean(
@@ -249,11 +252,9 @@
                         && nameConfirmation.value.trim() === selectedAssignment.person
                     );
                     revealButton.disabled = !confirmed;
-                    if (confirmed) {
-                        status.textContent = "A neved megerősítve. Most már felfedheted a húzást.";
-                    } else if (selectedAssignment) {
-                        status.textContent = "Írd be pontosan a kiválasztott nevet.";
-                    }
+                    status.textContent = confirmed
+                        ? "A neved megerősítve. Most már felfedheted a húzást."
+                        : "Írd be pontosan a kiválasztott nevet.";
                 });
                 revealButton.addEventListener("click", () => {
                     if (
@@ -264,7 +265,6 @@
                 });
             })
             .catch((error) => {
-                personSelect.replaceChildren();
                 status.textContent = `Hiba a húzás betöltésekor: ${error.message}`;
                 status.classList.add("error");
             });

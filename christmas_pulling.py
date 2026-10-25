@@ -2,6 +2,7 @@ import base64
 import json
 from pathlib import Path
 import random
+import sys
 
 NAMES = [
     ("Gyula", 0),
@@ -33,11 +34,16 @@ def shuffle_assignments() -> list[tuple[str, str]]:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")
     result_path = Path(__file__).with_name("result.json")
     assignments = shuffle_assignments()
+    codes = iter(
+        random.sample(range(10000), len(assignments))
+    )
     result = [
         {
             "person": giver,
+            "code": f"{next(codes):04d}",
             "pulled": base64.b64encode(receiver.encode("utf-8")).decode("ascii"),
         }
         for giver, receiver in assignments
@@ -47,3 +53,6 @@ if __name__ == "__main__":
         encoding="utf-8",
     )
     print(f"Az új véletlenszerű húzás elkészült: {result_path}")
+    print("Személyes kódok:")
+    for assignment in result:
+        print(f"- {assignment['person']}: {assignment['code']}")
