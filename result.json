@@ -1,46 +1,46 @@
 [
   {
-    "person": "Bence",
-    "pulled": "TGlsaQ=="
-  },
-  {
-    "person": "Lili",
-    "pulled": "w4FiZWw="
-  },
-  {
-    "person": "Ábel",
-    "pulled": "VGlib3I="
-  },
-  {
-    "person": "Tibor",
-    "pulled": "QWTDqWw="
-  },
-  {
-    "person": "Adél",
-    "pulled": "RXN6dGVy"
-  },
-  {
     "person": "Eszter",
-    "pulled": "UGV0cmE="
-  },
-  {
-    "person": "Petra",
     "pulled": "R3l1bGE="
   },
   {
     "person": "Gyula",
-    "pulled": "SsOzenNp"
-  },
-  {
-    "person": "Józsi",
     "pulled": "RGFuaQ=="
   },
   {
     "person": "Dani",
+    "pulled": "w4FiZWw="
+  },
+  {
+    "person": "Ábel",
+    "pulled": "TGlsaQ=="
+  },
+  {
+    "person": "Lili",
     "pulled": "RXN6dGVyw6Fn"
   },
   {
     "person": "Eszterág",
+    "pulled": "QWTDqWw="
+  },
+  {
+    "person": "Adél",
+    "pulled": "UGV0cmE="
+  },
+  {
+    "person": "Petra",
     "pulled": "QmVuY2U="
+  },
+  {
+    "person": "Bence",
+    "pulled": "VGlib3I="
+  },
+  {
+    "person": "Tibor",
+    "pulled": "SsOzenNp"
+  },
+  {
+    "person": "Józsi",
+    "pulled": "RXN6dGVy"
   }
 ]

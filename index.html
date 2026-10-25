@@ -3,86 +3,193 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Christmas Pulling</title>
+    <title>Christmas Pulling | Secret Signal</title>
     <style>
         :root {
             color-scheme: dark;
-            --background: #101820;
-            --surface: #182632;
-            --text: #f5f7fa;
-            --muted: #b7c5d0;
+            --ink: #f7fbff;
+            --muted: #9eb4c9;
+            --ice: #a7f3ff;
+            --pink: #ff6ba6;
+            --gold: #ffd166;
+            --panel: rgba(11, 22, 42, .78);
+            --line: rgba(167, 243, 255, .2);
         }
         * { box-sizing: border-box; }
+        html { background: #050816; }
         body {
-            margin: 0;
             min-height: 100vh;
-            padding: 3rem 1.25rem;
-            background: radial-gradient(circle at top, #244556, var(--background) 55%);
-            color: var(--text);
-            font: 16px/1.5 system-ui, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 50% -10%, #273d75 0, transparent 34rem),
+                radial-gradient(circle at 0% 90%, #302064 0, transparent 28rem),
+                #050816;
+            color: var(--ink);
+            font: 16px/1.5 Inter, ui-sans-serif, system-ui, sans-serif;
         }
-        main { width: min(100%, 48rem); margin: auto; }
-        header { margin-bottom: 2rem; text-align: center; }
-        h1 { margin: 0 0 .5rem; font-size: clamp(2rem, 7vw, 3.5rem); }
-        header p, #status { margin: 0; color: var(--muted); }
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(115deg, transparent 20%, #5cf2d90c 50%, transparent 80%);
+            background-size: 220% 100%;
+            content: "";
+            animation: aurora 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+        #snow { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        main { width: min(100% - 2rem, 56rem); margin: auto; padding: 3.5rem 0 2rem; }
+        header { position: relative; margin-bottom: 2rem; text-align: center; }
+        .eyebrow {
+            margin: 0 0 .75rem;
+            color: var(--ice);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+        }
+        h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 10vw, 5.5rem);
+            letter-spacing: -.07em;
+            line-height: .95;
+            text-shadow: 0 0 1.5rem #a7f3ff55, .08em .08em 0 #ff6ba633;
+            animation: titlePulse 3s ease-in-out infinite alternate;
+        }
+        header p { margin: 1rem auto 0; max-width: 34rem; color: var(--muted); }
         .card {
-            padding: 1.5rem;
-            border: 1px solid #315366;
-            border-radius: 1rem;
-            background: #182632eb;
-            box-shadow: 0 1rem 3rem #0005;
+            position: relative;
+            overflow: hidden;
+            padding: clamp(1.25rem, 5vw, 2.5rem);
+            border: 1px solid var(--line);
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #10213dd9, var(--panel));
+            box-shadow: 0 2rem 5rem #0008, inset 0 1px #ffffff18;
+            backdrop-filter: blur(18px);
+            animation: arrive .8s cubic-bezier(.2, .8, .2, 1) both;
         }
-        label { display: block; margin-bottom: .5rem; color: var(--muted); }
-        select, button {
+        .card::before {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: repeating-linear-gradient(0deg, transparent 0 5px, #ffffff03 6px 7px);
+            content: "";
+            pointer-events: none;
+        }
+        .card::after {
+            position: absolute;
+            top: -5rem;
+            right: -3rem;
+            width: 14rem;
+            height: 14rem;
+            border-radius: 50%;
+            background: var(--pink);
+            content: "";
+            filter: blur(5rem);
+            opacity: .13;
+            pointer-events: none;
+        }
+        .field-label { display: block; margin-bottom: .65rem; color: var(--muted); font-size: .85rem; font-weight: 700; }
+        select, button, textarea {
             width: 100%;
-            min-height: 3rem;
-            border: 1px solid #496b7c;
-            border-radius: .5rem;
-            padding: .75rem 1rem;
+            border: 1px solid #6e91ad66;
+            border-radius: .8rem;
+            padding: .85rem 1rem;
             font: inherit;
         }
-        select { background: #101820; color: var(--text); }
+        select, textarea { background: #071225cc; color: var(--ink); }
+        select { min-height: 3.25rem; }
+        select:focus, textarea:focus { border-color: var(--ice); box-shadow: 0 0 0 .25rem #a7f3ff1c, 0 0 1.5rem #a7f3ff22; outline: none; }
         button {
-            margin-top: 1rem;
-            background: #ef6f6c;
-            color: #201315;
+            min-height: 3.25rem;
+            background: linear-gradient(110deg, var(--pink), #ffab6e 45%, var(--gold));
+            background-size: 200% 100%;
+            color: #1d1020;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 850;
+            transition: transform .2s ease, box-shadow .2s ease, background-position .5s ease;
         }
-        button:disabled { cursor: not-allowed; opacity: .5; }
+        button:hover:not(:disabled) { background-position: 100% 0; box-shadow: 0 .7rem 2rem #ff6ba655; transform: translateY(-3px); }
+        button:active:not(:disabled) { transform: translateY(1px) scale(.98); }
+        button:focus-visible { outline: 3px solid var(--ice); outline-offset: 3px; }
+        button:disabled { cursor: not-allowed; opacity: .45; }
+        .primary { margin-top: 1rem; }
         .result {
+            position: relative;
+            z-index: 1;
             margin-top: 1.5rem;
             padding: 1.25rem;
-            border-radius: .5rem;
-            background: #234253;
-            color: #ffd5a8;
+            border: 1px solid #ffd16688;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #28335dcc, #521e4ccc);
+            text-align: center;
+            animation: reveal .7s cubic-bezier(.2, 1.4, .4, 1) both;
+        }
+        .result-label { color: #ffdcb0; font-size: .8rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+        .result code { display: block; margin: .4rem 0 1rem; color: var(--gold); font-size: clamp(1.5rem, 6vw, 2.4rem); font-weight: 900; letter-spacing: .08em; overflow-wrap: anywhere; text-shadow: 0 0 .9rem #ffd16688; }
+        .decoder {
+            position: relative;
+            z-index: 1;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ffffff14;
+        }
+        .decoder h2 { margin: 0 0 .3rem; font-size: 1.05rem; }
+        .decoder p { margin: 0 0 1rem; color: var(--muted); font-size: .9rem; }
+        .decode-output {
+            min-height: 3.2rem;
+            margin-top: 1rem;
+            padding: .8rem 1rem;
+            border: 1px dashed #a7f3ff77;
+            border-radius: .8rem;
+            background: #a7f3ff0b;
+            color: var(--ice);
             font-size: 1.25rem;
-            font-weight: 700;
-            text-align: center;
+            font-weight: 800;
+            overflow-wrap: anywhere;
         }
-        .decoder-link {
-            display: block;
-            margin-top: .75rem;
-            color: #b7e3f5;
-            text-align: center;
-        }
-        footer { margin-top: 1.25rem; text-align: center; }
+        .decode-output:empty { display: none; }
+        .decode-output.decoding { color: var(--ice); background: linear-gradient(90deg, #a7f3ff12, #a7f3ff55, #a7f3ff12); background-size: 200% 100%; animation: shimmer .6s linear infinite, signalFlicker .18s steps(2) infinite; }
+        .decode-output.success { animation: decoded .7s cubic-bezier(.2, 1.5, .4, 1) both; }
+        footer { color: var(--muted); font-size: .8rem; text-align: center; }
+        #status { margin: 1.25rem 0 0; }
         .error { color: #ffaaa7 !important; }
+        @keyframes arrive { from { opacity: 0; transform: translateY(2rem) scale(.95) rotateX(5deg); } to { opacity: 1; transform: none; } }
+        @keyframes reveal { from { opacity: 0; transform: translateY(1rem) scale(.9) rotateX(-15deg); } to { opacity: 1; transform: none; } }
+        @keyframes decoded { 0% { opacity: 0; transform: scale(.7) rotate(-2deg); filter: blur(12px); } 70% { transform: scale(1.06) rotate(1deg); } 100% { opacity: 1; transform: none; filter: none; } }
+        @keyframes shimmer { to { background-position: -200% 0; } }
+        @keyframes signalFlicker { 50% { opacity: .55; } }
+        @keyframes titlePulse { from { filter: brightness(1); } to { filter: brightness(1.25) saturate(1.25); } }
+        @keyframes aurora { 0%, 100% { background-position: 0 0; opacity: .7; } 50% { background-position: 100% 0; opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+        }
     </style>
 </head>
 <body>
+    <canvas id="snow" aria-hidden="true"></canvas>
     <main>
         <header>
-            <h1>🎄 Christmas Pulling</h1>
-            <p>Select your name, then reveal your encoded result.</p>
+            <p class="eyebrow">✦ encrypted christmas exchange ✦</p>
+            <h1>🎄 Secret Signal</h1>
+            <p>Choose your name. Decode your mission. Keep the magic secret.</p>
         </header>
         <section class="card" aria-label="Christmas pulling result">
-            <label for="person">Choose your name</label>
+            <label class="field-label" for="person">Your identity</label>
             <select id="person" disabled>
                 <option>Loading the draw…</option>
             </select>
-            <button id="reveal" type="button" disabled>Reveal my result</button>
-            <div id="result" class="result" hidden aria-live="polite"></div>
+            <div class="result" id="result" hidden aria-live="polite">
+                <div class="result-label">Your encoded name</div>
+                <code id="encoded-result"></code>
+                <button class="primary" id="reveal" type="button" disabled>◉ Decode name</button>
+            </div>
+            <div class="decoder" id="decoder">
+                <h2>◈ Name decoder</h2>
+                <p>Every name rotates through the signal before locking into place.</p>
+                <div class="decode-output" id="decode-output" aria-live="polite"></div>
+            </div>
         </section>
         <footer><p id="status">Loading the latest draw.</p></footer>
     </main>
@@ -90,37 +197,80 @@
         const personSelect = document.querySelector("#person");
         const revealButton = document.querySelector("#reveal");
         const resultBox = document.querySelector("#result");
+        const encodedResult = document.querySelector("#encoded-result");
+        const decodeOutput = document.querySelector("#decode-output");
         const status = document.querySelector("#status");
         let selectedAssignment;
+        let activeAnimation;
+
+        function decodeBase64(value) {
+            const bytes = Uint8Array.from(atob(value.trim()), (character) => character.charCodeAt(0));
+            return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+        }
+
+        function runDecode(value, names) {
+            if (activeAnimation) window.clearTimeout(activeAnimation);
+            decodeOutput.className = "decode-output decoding";
+            let decodedName;
+            try {
+                decodedName = decodeBase64(value);
+            } catch {
+                decodeOutput.textContent = "That signal is not valid Base64.";
+                decodeOutput.className = "decode-output error";
+                status.textContent = "Decode failed. Check the signal and try again.";
+                status.classList.add("error");
+                return;
+            }
+            status.classList.remove("error");
+            status.textContent = "Cycling through every possible name…";
+            revealButton.disabled = true;
+            const targetIndex = names.indexOf(decodedName);
+            const totalSteps = names.length * 3 + targetIndex + 1;
+            let step = 0;
+            const rotate = () => {
+                decodeOutput.textContent = names[step % names.length];
+                step += 1;
+                if (step < totalSteps) {
+                    const progress = step / totalSteps;
+                    const delay = 180 + Math.round(progress * progress * 520);
+                    activeAnimation = window.setTimeout(rotate, delay);
+                    return;
+                }
+                decodeOutput.textContent = `🎁 ${decodedName}`;
+                decodeOutput.className = "decode-output success";
+                activeAnimation = null;
+                revealButton.disabled = false;
+                status.textContent = "Name decoded. Mission acquired. Keep it secret!";
+            };
+            rotate();
+        }
 
         fetch("result.json")
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Could not load result.json (${response.status})`);
-                }
+                if (!response.ok) throw new Error(`Could not load result.json (${response.status})`);
                 return response.json();
             })
             .then((result) => {
-                personSelect.replaceChildren(
-                    new Option("Choose your name…", "")
-                );
-                result.forEach((assignment) => {
-                    personSelect.add(new Option(assignment.person, assignment.person));
-                });
+                personSelect.replaceChildren(new Option("Choose your name…", ""));
+                result.forEach(({ person }) => personSelect.add(new Option(person, person)));
                 personSelect.disabled = false;
-                status.textContent = "Your encoded result stays hidden until you reveal it.";
+                status.textContent = "Select your name to reveal its encoded name.";
                 personSelect.addEventListener("change", () => {
-                    selectedAssignment = result.find(
-                        ({ person }) => person === personSelect.value
-                    );
+                    if (activeAnimation) window.clearTimeout(activeAnimation);
+                    activeAnimation = null;
+                    selectedAssignment = result.find(({ person }) => person === personSelect.value);
+                    resultBox.hidden = !selectedAssignment;
+                    encodedResult.textContent = selectedAssignment?.pulled ?? "";
                     revealButton.disabled = !selectedAssignment;
-                    resultBox.hidden = true;
-                    resultBox.textContent = "";
+                    decodeOutput.className = "decode-output";
+                    decodeOutput.textContent = "";
+                    status.textContent = selectedAssignment
+                        ? "Encoded name revealed. Press Decode name to continue."
+                        : "Select your name to reveal its encoded name.";
                 });
                 revealButton.addEventListener("click", () => {
                     if (!selectedAssignment) return;
-                    resultBox.innerHTML = `Your encoded result: <code>${selectedAssignment.pulled}</code><a class="decoder-link" href="https://emn178.github.io/online-tools/base64_decode.html" target="_blank" rel="noopener noreferrer">Open the Base64 decoder</a>`;
-                    resultBox.hidden = false;
+                    runDecode(selectedAssignment.pulled, result.map(({ person }) => person));
                 });
             })
             .catch((error) => {
@@ -128,6 +278,34 @@
                 status.textContent = error.message;
                 status.classList.add("error");
             });
+
+        const canvas = document.querySelector("#snow");
+        const context = canvas.getContext("2d");
+        const flakes = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        function createFlake() {
+            return { x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2.8 + .6, speed: Math.random() * .45 + .15, drift: Math.random() * .5 - .25, alpha: Math.random() * .65 + .2 };
+        }
+        function animateSnow() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            while (flakes.length < Math.min(110, Math.floor(window.innerWidth / 9))) flakes.push(createFlake());
+            flakes.forEach((flake) => {
+                flake.y += flake.speed;
+                flake.x += flake.drift;
+                if (flake.y > canvas.height + 5) Object.assign(flake, createFlake(), { y: -5 });
+                context.beginPath();
+                context.fillStyle = `rgba(205, 244, 255, ${flake.alpha})`;
+                context.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+                context.fill();
+            });
+            requestAnimationFrame(animateSnow);
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+        animateSnow();
     </script>
 </body>
 </html>

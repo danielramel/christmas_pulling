@@ -34,10 +34,6 @@ def shuffle_assignments() -> list[tuple[str, str]]:
 
 if __name__ == "__main__":
     result_path = Path(__file__).with_name("result.json")
-    if result_path.exists():
-        raise SystemExit(
-            f"{result_path} already exists; refusing to replace the existing draw."
-        )
     assignments = shuffle_assignments()
     result = [
         {
