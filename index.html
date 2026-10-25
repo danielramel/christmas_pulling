@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Christmas Pulling</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --background: #101820;
+            --surface: #182632;
+            --text: #f5f7fa;
+            --muted: #b7c5d0;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 3rem 1.25rem;
+            background: radial-gradient(circle at top, #244556, var(--background) 55%);
+            color: var(--text);
+            font: 16px/1.5 system-ui, sans-serif;
+        }
+        main { width: min(100%, 48rem); margin: auto; }
+        header { margin-bottom: 2rem; text-align: center; }
+        h1 { margin: 0 0 .5rem; font-size: clamp(2rem, 7vw, 3.5rem); }
+        header p, #status { margin: 0; color: var(--muted); }
+        .card {
+            padding: 1.5rem;
+            border: 1px solid #315366;
+            border-radius: 1rem;
+            background: #182632eb;
+            box-shadow: 0 1rem 3rem #0005;
+        }
+        label { display: block; margin-bottom: .5rem; color: var(--muted); }
+        select, button {
+            width: 100%;
+            min-height: 3rem;
+            border: 1px solid #496b7c;
+            border-radius: .5rem;
+            padding: .75rem 1rem;
+            font: inherit;
+        }
+        select { background: #101820; color: var(--text); }
+        button {
+            margin-top: 1rem;
+            background: #ef6f6c;
+            color: #201315;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        button:disabled { cursor: not-allowed; opacity: .5; }
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: .5rem;
+            background: #234253;
+            color: #ffd5a8;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .decoder-link {
+            display: block;
+            margin-top: .75rem;
+            color: #b7e3f5;
+            text-align: center;
+        }
+        footer { margin-top: 1.25rem; text-align: center; }
+        .error { color: #ffaaa7 !important; }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>🎄 Christmas Pulling</h1>
+            <p>Select your name, then reveal your encoded result.</p>
+        </header>
+        <section class="card" aria-label="Christmas pulling result">
+            <label for="person">Choose your name</label>
+            <select id="person" disabled>
+                <option>Loading the draw…</option>
+            </select>
+            <button id="reveal" type="button" disabled>Reveal my result</button>
+            <div id="result" class="result" hidden aria-live="polite"></div>
+        </section>
+        <footer><p id="status">Loading the latest draw.</p></footer>
+    </main>
+    <script>
+        const personSelect = document.querySelector("#person");
+        const revealButton = document.querySelector("#reveal");
+        const resultBox = document.querySelector("#result");
+        const status = document.querySelector("#status");
+        let selectedAssignment;
+
+        fetch("result.json")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Could not load result.json (${response.status})`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                personSelect.replaceChildren(
+                    new Option("Choose your name…", "")
+                );
+                result.forEach((assignment) => {
+                    personSelect.add(new Option(assignment.person, assignment.person));
+                });
+                personSelect.disabled = false;
+                status.textContent = "Your encoded result stays hidden until you reveal it.";
+                personSelect.addEventListener("change", () => {
+                    selectedAssignment = result.find(
+                        ({ person }) => person === personSelect.value
+                    );
+                    revealButton.disabled = !selectedAssignment;
+                    resultBox.hidden = true;
+                    resultBox.textContent = "";
+                });
+                revealButton.addEventListener("click", () => {
+                    if (!selectedAssignment) return;
+                    resultBox.innerHTML = `Your encoded result: <code>${selectedAssignment.pulled}</code><a class="decoder-link" href="https://emn178.github.io/online-tools/base64_decode.html" target="_blank" rel="noopener noreferrer">Open the Base64 decoder</a>`;
+                    resultBox.hidden = false;
+                });
+            })
+            .catch((error) => {
+                personSelect.replaceChildren();
+                status.textContent = error.message;
+                status.classList.add("error");
+            });
+    </script>
+</body>
+</html>
