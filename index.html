@@ -199,14 +199,14 @@
             status.textContent = "A név felfedése…";
             revealButton.disabled = true;
             const targetIndex = names.indexOf(decodedName);
-            const totalSteps = names.length * 2 + targetIndex + 1;
+            const totalSteps = names.length * 3 + targetIndex + 1;
             let step = 0;
             const rotate = () => {
                 decodeOutput.textContent = names[step % names.length];
                 step += 1;
-                if (step < totalSteps) {
+                if (step <= totalSteps) {
                     const progress = step / totalSteps;
-                    const delay = 45 + Math.round(progress * 75);
+                    const delay = 45 + Math.round(Math.pow(progress, 4) * 1000);
                     activeAnimation = window.setTimeout(rotate, delay);
                     return;
                 }
