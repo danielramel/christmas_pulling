@@ -70,16 +70,17 @@
             pointer-events: none;
         }
         .field-label { display: block; margin-bottom: .65rem; color: var(--muted); font-size: .85rem; font-weight: 700; }
-        select, button, textarea {
+        select, input, button, textarea {
             width: 100%;
             border: 1px solid #6e91ad66;
             border-radius: .8rem;
             padding: .85rem 1rem;
             font: inherit;
         }
-        select, textarea { background: #071225cc; color: var(--ink); }
+        select, input, textarea { background: #071225cc; color: var(--ink); }
         select { min-height: 3.25rem; }
-        select:focus, textarea:focus { border-color: var(--ice); box-shadow: 0 0 0 .25rem #a7f3ff1c, 0 0 1.5rem #a7f3ff22; outline: none; }
+        input { min-height: 3.25rem; }
+        select:focus, input:focus, textarea:focus { border-color: var(--ice); box-shadow: 0 0 0 .25rem #a7f3ff1c, 0 0 1.5rem #a7f3ff22; outline: none; }
         button {
             min-height: 3.25rem;
             background: linear-gradient(110deg, var(--pink), #ffab6e 45%, var(--gold));
@@ -157,6 +158,8 @@
         <div class="result" id="result" hidden aria-live="polite">
             <div class="result-label">A titkos jel</div>
             <code id="encoded-result"></code>
+            <label class="field-label" for="name-confirmation">Írd be újra a neved a felfedéshez</label>
+            <input id="name-confirmation" type="text" autocomplete="off" disabled>
             <button class="primary" id="reveal" type="button" disabled>◉ Felfedés</button>
         </div>
         <div class="decoder" id="decoder">
@@ -171,6 +174,7 @@
         const revealButton = document.querySelector("#reveal");
         const resultBox = document.querySelector("#result");
         const encodedResult = document.querySelector("#encoded-result");
+        const nameConfirmation = document.querySelector("#name-confirmation");
         const decodeOutput = document.querySelector("#decode-output");
         const status = document.querySelector("#status");
         let selectedAssignment;
@@ -234,15 +238,32 @@
                     selectedAssignment = result.find(({ person }) => person === personSelect.value);
                     resultBox.hidden = !selectedAssignment;
                     encodedResult.textContent = selectedAssignment?.pulled ?? "";
-                    revealButton.disabled = !selectedAssignment;
+                    nameConfirmation.value = "";
+                    nameConfirmation.disabled = !selectedAssignment;
+                    revealButton.disabled = true;
                     decodeOutput.className = "decode-output";
                     decodeOutput.textContent = "";
                     status.textContent = selectedAssignment
-                        ? "A titkos jel készen áll. Nyomd meg a felfedést."
+                        ? "Írd be újra a neved a felfedéshez."
                         : "Válaszd ki a neved.";
                 });
+                nameConfirmation.addEventListener("input", () => {
+                    const confirmed = Boolean(
+                        selectedAssignment
+                        && nameConfirmation.value.trim() === selectedAssignment.person
+                    );
+                    revealButton.disabled = !confirmed;
+                    if (confirmed) {
+                        status.textContent = "A neved megerősítve. Most már felfedheted a húzást.";
+                    } else if (selectedAssignment) {
+                        status.textContent = "Írd be pontosan a kiválasztott nevet.";
+                    }
+                });
                 revealButton.addEventListener("click", () => {
-                    if (!selectedAssignment) return;
+                    if (
+                        !selectedAssignment
+                        || nameConfirmation.value.trim() !== selectedAssignment.person
+                    ) return;
                     runDecode(selectedAssignment.pulled, result.map(({ person }) => person));
                 });
             })
