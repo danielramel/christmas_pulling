@@ -148,12 +148,11 @@
     <main>
     <header>
         <h1>🎄 Karácsonyi húzás</h1>
-        <p>Írd be a neked küldött személyes kódot, és tudd meg, kinek készülj ajándékkal!</p>
+        <p>Írd be a neked küldött password-t, és tudd meg, kinek készülj ajándékkal!</p>
     </header>
     <section class="card" aria-label="Karácsonyi húzás eredménye">
-        <label class="field-label" for="code">A személyes kódod</label>
-        <input id="code" type="text" inputmode="numeric" pattern="[0-9]{4}"
-            maxlength="4" autocomplete="one-time-code" placeholder="0000">
+        <label class="field-label" for="password">A megfejtésed</label>
+        <input id="password" type="text" autocomplete="off" placeholder="Írd be a megfejtésedet…">
         <button class="primary" id="load" type="button">◉ Bejelentkezés</button>
         <div class="result" id="result" hidden aria-live="polite">
             <div id="person-name"></div>
@@ -169,7 +168,7 @@
     <footer><p id="status">A húzás betöltése…</p></footer>
     </main>
     <script>
-        const codeInput = document.querySelector("#code");
+        const passwordInput = document.querySelector("#password");
         const loadButton = document.querySelector("#load");
         const resultBox = document.querySelector("#result");
         const personName = document.querySelector("#person-name");
@@ -229,8 +228,11 @@
             })
             .then((result) => {
                 loadButton.addEventListener("click", () => {
-                    const code = codeInput.value.trim();
-                    selectedAssignment = result.find((assignment) => assignment.code === code);
+                    const password = passwordInput.value.trim();
+                    selectedAssignment = result.find((assignment) => (
+                        assignment.password
+                        && assignment.password.toLocaleLowerCase() === password.toLocaleLowerCase()
+                    ));
                     resultBox.hidden = !selectedAssignment;
                     revealButton.disabled = true;
                     nameConfirmation.value = "";
@@ -243,7 +245,7 @@
                         nameConfirmation.focus();
                     } else {
                         personName.textContent = "";
-                        status.textContent = "Érvénytelen kód.";
+                        status.textContent = "Érvénytelen password.";
                     }
                 });
                 nameConfirmation.addEventListener("input", () => {

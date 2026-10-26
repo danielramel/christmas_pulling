@@ -1,57 +1,57 @@
 [
   {
+    "person": "Dani",
+    "password": "danidani",
+    "pulled": "SsOzenNp"
+  },
+  {
     "person": "Józsi",
-    "code": "3736",
+    "password": "steam",
     "pulled": "QmVuY2U="
   },
   {
     "person": "Bence",
-    "code": "6556",
-    "pulled": "UGV0cmE="
+    "password": "fagyi",
+    "pulled": "RGFuaQ=="
   },
   {
     "person": "Petra",
-    "code": "8654",
-    "pulled": "w4FiZWw="
-  },
-  {
-    "person": "Ábel",
-    "code": "2911",
-    "pulled": "TGlsaQ=="
-  },
-  {
-    "person": "Lili",
-    "code": "3170",
-    "pulled": "RXN6dGVy"
-  },
-  {
-    "person": "Eszter",
-    "code": "3910",
-    "pulled": "R3l1bGE="
-  },
-  {
-    "person": "Gyula",
-    "code": "7239",
+    "password": "malac",
     "pulled": "QWTDqWw="
   },
   {
     "person": "Adél",
-    "code": "0788",
-    "pulled": "RGFuaQ=="
+    "password": "fagyi",
+    "pulled": "R3l1bGE="
   },
   {
-    "person": "Dani",
-    "code": "0164",
-    "pulled": "RXN6dGVyw6Fn"
-  },
-  {
-    "person": "Eszterág",
-    "code": "4974",
+    "person": "Lili",
+    "password": "Phalange",
     "pulled": "VGlib3I="
   },
   {
+    "person": "Gyula",
+    "password": "Andre Agassi",
+    "pulled": "UGV0cmE="
+  },
+  {
+    "person": "Ábel",
+    "password": "fullánk",
+    "pulled": "SWxkaQ=="
+  },
+  {
+    "person": "Ildi",
+    "password": "tragédia",
+    "pulled": "RXN6dGVy"
+  },
+  {
     "person": "Tibor",
-    "code": "2621",
-    "pulled": "SsOzenNp"
+    "password": "legyszi ne nezd meg hogy a tobbiek mit huztak",
+    "pulled": "w4FiZWw="
+  },
+  {
+    "person": "Eszter",
+    "password": "nohab",
+    "pulled": "TGlsaQ=="
   }
 ]
