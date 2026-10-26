@@ -250,19 +250,25 @@
                         && assignment.password.toLocaleLowerCase() === password.toLocaleLowerCase()
                     ));
                     resultBox.hidden = !selectedAssignment;
-                    invalidPassword.hidden = Boolean(selectedAssignment);
                     revealButton.disabled = true;
                     nameConfirmation.value = "";
                     decodeOutput.textContent = "";
                     decodeOutput.className = "decode-output";
                     status.classList.toggle("error", !selectedAssignment);
                     if (selectedAssignment) {
+                        invalidPassword.hidden = true;
                         personName.textContent = selectedAssignment.person;
                         status.textContent = "Írd be újra a neved a felfedéshez.";
                         nameConfirmation.focus();
                     } else {
+                        invalidPassword.hidden = true;
+                        invalidPassword.style.animation = "none";
+                        void invalidPassword.offsetWidth;
+                        invalidPassword.style.animation = "";
+                        invalidPassword.hidden = false;
                         personName.textContent = "";
                         status.textContent = "Érvénytelen megfejtés.";
+                        passwordInput.focus();
                     }
                 });
                 nameConfirmation.addEventListener("input", () => {
