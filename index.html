@@ -95,6 +95,19 @@
         button:focus-visible { outline: 3px solid var(--ice); outline-offset: 3px; }
         button:disabled { cursor: not-allowed; opacity: .45; }
         .primary { margin-top: 1rem; }
+        .invalid-password {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border: 2px solid #ff6b6b;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #6b1724, #a52c3b);
+            color: #fff;
+            font-size: clamp(1.35rem, 5vw, 2rem);
+            font-weight: 900;
+            text-align: center;
+            text-shadow: 0 2px 0 #4d101a;
+            animation: reveal .35s ease-out both;
+        }
         .result {
             position: relative;
             z-index: 1;
@@ -154,6 +167,9 @@
         <label class="field-label" for="password">A megfejtésed</label>
         <input id="password" type="text" autocomplete="off" placeholder="Írd be a megfejtésedet…">
         <button class="primary" id="load" type="button">◉ Bejelentkezés</button>
+        <div class="invalid-password" id="invalid-password" hidden role="alert">
+            ⚠ NINCS ILYEN MEGFEJTÉS! ⚠
+        </div>
         <div class="result" id="result" hidden aria-live="polite">
             <div id="person-name"></div>
             <label class="field-label" for="name-confirmation">Írd be újra a neved a felfedéshez</label>
@@ -170,6 +186,7 @@
     <script>
         const passwordInput = document.querySelector("#password");
         const loadButton = document.querySelector("#load");
+        const invalidPassword = document.querySelector("#invalid-password");
         const resultBox = document.querySelector("#result");
         const personName = document.querySelector("#person-name");
         const nameConfirmation = document.querySelector("#name-confirmation");
@@ -234,6 +251,7 @@
                         && assignment.password.toLocaleLowerCase() === password.toLocaleLowerCase()
                     ));
                     resultBox.hidden = !selectedAssignment;
+                    invalidPassword.hidden = Boolean(selectedAssignment);
                     revealButton.disabled = true;
                     nameConfirmation.value = "";
                     decodeOutput.textContent = "";
@@ -245,7 +263,7 @@
                         nameConfirmation.focus();
                     } else {
                         personName.textContent = "";
-                        status.textContent = "Érvénytelen password.";
+                        status.textContent = "Érvénytelen megfejtés.";
                     }
                 });
                 nameConfirmation.addEventListener("input", () => {
