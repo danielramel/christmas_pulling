@@ -1,5 +1,10 @@
 [
   {
+    "person": "Tibor",
+    "password": "hello tibor legyszi ne nezd meg, h a tobbiek mit huztak",
+    "pulled": "w4FiZWw="
+  },
+  {
     "person": "Dani",
     "password": "danidani",
     "pulled": "SsOzenNp"
@@ -43,11 +48,6 @@
     "person": "Ildi",
     "password": "tragédia",
     "pulled": "RXN6dGVy"
-  },
-  {
-    "person": "Tibor",
-    "password": "legyszi ne nezd meg hogy a tobbiek mit huztak",
-    "pulled": "w4FiZWw="
   },
   {
     "person": "Eszter",
